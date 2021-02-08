@@ -9,10 +9,11 @@ from argparse import ArgumentParser
 
 def main():
 	parser = ArgumentParser(description = "创建gif图片")
-	parser.add_argument("-d", "--duration", type = float, default = 200, help = "时间间隔。默认200ms")
+	parser.add_argument("-d", "--duration", type = int, default = 200, help = "时间间隔。默认200ms")
 	parser.add_argument("-o", "--output", help = "输出路径")
 	parser.add_argument("-f", "--filters", default = "png,jpg,bmp", help = "用于在文件夹中搜索指定的后缀文件。默认: png,jpg,bmp")
 	parser.add_argument("-s", "--size", help = "输出图片大小。格式: 640x480; 或者640x，仅限定宽度为640，高度等比缩放; 或者x480，仅限定高度为480，宽度等比缩放")
+	parser.add_argument("-l", "--loop", type = int, default = 0, help = "循环次数。默认0，表示无限循环")
 	parser.add_argument("inputs", nargs = "+", help = "输入文件路径，或文件夹。支持混合输入")
 
 	option = parser.parse_args()
@@ -66,7 +67,7 @@ def main():
 		output_path = path.dirname(input_paths[0]) + ".gif"
 
 	print("save gif to:", output_path)
-	images[0].save(output_path, save_all = True, duration = option.duration, append_images = images[1:])
+	images[0].save(output_path, save_all = True, duration = option.duration, append_images = images[1:], loop = option.loop)
 
 def parse_size(size_str, size):
 	if not size_str:
