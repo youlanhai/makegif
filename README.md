@@ -1,9 +1,11 @@
 # makegif
-输入图片文件或文件夹来创建gif图片。支持python2和python3。
+输入图片文件或文件夹来创建gif图片。支持python2和python3，需要先安装Pillow插件: `pip install Pillow`。
 
 ```
 python makegif.py -o test.gif input1.png input2/
 ```
+
+
 
 ```
 usage: makegif.py [-h] [-d DURATION] [-o OUTPUT] [-f FILTERS] [-s SIZE]
