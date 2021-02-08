@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # 描述: 创建gif图片
 # 作者: youlanhai
@@ -10,7 +11,7 @@ from argparse import ArgumentParser
 def main():
 	parser = ArgumentParser(description = "创建gif图片")
 	parser.add_argument("-d", "--duration", type = int, default = 200, help = "时间间隔。默认200ms")
-	parser.add_argument("-o", "--output", help = "输出路径")
+	parser.add_argument("-o", "--output", help = "输出路径。如果未指定，则使用第一个图片所在的文件夹作为名称。如果文件夹为当前路径，则输出名称为out.git")
 	parser.add_argument("-f", "--filters", default = "png,jpg,bmp", help = "用于在文件夹中搜索指定的后缀文件。默认: png,jpg,bmp")
 	parser.add_argument("-s", "--size", help = "输出图片大小。格式: 640x480; 或者640x，仅限定宽度为640，高度等比缩放; 或者x480，仅限定高度为480，宽度等比缩放")
 	parser.add_argument("-l", "--loop", type = int, default = 0, help = "循环次数。默认0，表示无限循环")
@@ -64,7 +65,10 @@ def main():
 	# 输出
 	output_path = option.output
 	if not output_path:
-		output_path = path.dirname(input_paths[0]) + ".gif"
+		name = path.dirname(input_paths[0])
+		if name == "" or name == ".":
+			name = "out"
+		output_path = name + ".gif"
 
 	print("save gif to:", output_path)
 	images[0].save(output_path, save_all = True, duration = option.duration, append_images = images[1:], loop = option.loop)
